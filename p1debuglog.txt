@@ -1,1 +1,83 @@
+gcc -g p1original.c -lm
+p1original.c: In function ‘main’:
+p1original.c:15:39: warning: passing argument 5 of ‘distance’ from incompatible pointer type [-Wincompatible-pointer-types]
+     float ans = distance(a1,a2,b1,b2, &result);
+                                       ^
+p1original.c:6:7: note: expected ‘float *’ but argument is of type ‘float **’
+ float distance(float x1, float x2, float y1, float y2, float *dist);
+       ^~~~~~~~
+ gdb a.out 
+GNU gdb (Ubuntu 8.1.1-0ubuntu1) 8.1.1
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from a.out...done.
+(gdb) b main
+Breakpoint 1 at 0x7e2: file p1original.c, line 10.
+(gdb) r
+Starting program: /home/runner/Test2Session2/a.out 
+warning: Error disabling address space randomization: Operation not permitted
 
+Breakpoint 1, main () at p1original.c:10
+10  {
+(gdb) n
+13      input(&a1, &a2, &b1, &b2);
+(gdb) s
+input (x1=0x7fffbed4ac5c, x2=0x7fffbed4ac64, y1=0x7fffbed4ac60, 
+    y2=0x7fffbed4ac68) at p1original.c:25
+25      printf("Enter the x coordinates: ");
+(gdb) n
+26      scanf("%f %f", x1,x2);
+(gdb) n
+Enter the x coordinates: 12 34
+28      printf("Enter the y coordinates: ");
+(gdb) n
+29      scanf("%f %f",y1,y2);
+(gdb) n
+Enter the y coordinates: 14
+26
+30  }
+(gdb) n
+main () at p1original.c:15
+15      float ans = distance(a1,a2,b1,b2, &result);
+(gdb) s
+distance (x1=12, x2=34, y1=14, y2=26, dist=0x7fffbed4ac70) at p1original.c:34
+34      float x = pow((x2-x1),2);
+(gdb) 
+__pow (x=22, y=2) at w_pow_compat.c:29
+29  w_pow_compat.c: No such file or directory.
+(gdb) n
+30  in w_pow_compat.c
+(gdb) 
+31  in w_pow_compat.c
+(gdb) n
+55  in w_pow_compat.c
+(gdb) n
+62  in w_pow_compat.c
+(gdb) n
+distance (x1=12, x2=34, y1=14, y2=26, dist=0x7fffbed4ac70) at p1original.c:35
+35      float y = pow((y2-y1),2);
+(gdb) n
+37      *dist = sqrt(x+y);
+(gdb) n
+39      return *dist;
+(gdb) n
+40  }
+(gdb) n
+main () at p1original.c:17
+17      output(a1,a2,b1,b2,ans);
+(gdb) c
+Continuing.
+the distance between (12.00, 34.00) and (14.00, 26.00):
+The result: 25.06[Inferior 1 (process 1502) exited normally]
+(gdb) q
