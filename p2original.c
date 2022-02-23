@@ -46,4 +46,5 @@ void output(float x1, float y1, float x2, float y2,float x3, float y3, int istri
   printf("no the points don't form a triangle!!\n");
   else
   printf("yes the points do form a triangle!!\n");
+  
 }
