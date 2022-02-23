@@ -1,1 +1,141 @@
+gcc -g p1original.c -lm
+p1original.c: In function ‘main’:
+p1original.c:15:39: warning: passing argument 5 of ‘distance’ from incompatible pointer type [-Wincompatible-pointer-types]
+     float ans = distance(a1,a2,b1,b2, &result);
+                                       ^
+p1original.c:6:7: note: expected ‘float *’ but argument is of type ‘float **’
+ float distance(float x1, float x2, float y1, float y2, float *dist);
+       ^~~~~~~~
+ gdb a.out 
+GNU gdb (Ubuntu 8.1.1-0ubuntu1) 8.1.1
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from a.out...done.
+(gdb) b main
+Breakpoint 1 at 0x7e2: file p1original.c, line 10.
+(gdb) r
+Starting program: /home/runner/Test2Session2/a.out 
+warning: Error disabling address space randomization: Operation not permitted
 
+Breakpoint 1, main () at p1original.c:10
+10  {
+(gdb) n
+13      input(&a1, &a2, &b1, &b2);
+(gdb) s
+input (x1=0x7fffbed4ac5c, x2=0x7fffbed4ac64, y1=0x7fffbed4ac60, 
+    y2=0x7fffbed4ac68) at p1original.c:25
+25      printf("Enter the x coordinates: ");
+(gdb) n
+26      scanf("%f %f", x1,x2);
+(gdb) n
+Enter the x coordinates: 12 34
+28      printf("Enter the y coordinates: ");
+(gdb) n
+29      scanf("%f %f",y1,y2);
+(gdb) n
+Enter the y coordinates: 14
+26
+30  }
+(gdb) n
+main () at p1original.c:15
+15      float ans = distance(a1,a2,b1,b2, &result);
+(gdb) s
+distance (x1=12, x2=34, y1=14, y2=26, dist=0x7fffbed4ac70) at p1original.c:34
+34      float x = pow((x2-x1),2);
+(gdb) 
+__pow (x=22, y=2) at w_pow_compat.c:29
+  
+ gcc -g p2original.c
+ gdb a.out 
+GNU gdb (Ubuntu 8.1.1-0ubuntu1) 8.1.1
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from a.out...done.
+(gdb) b main 
+Breakpoint 1 at 0x772: file p2original.c, line 10.
+(gdb) r
+Starting program: /home/runner/Test2Session2/a.out 
+warning: Error disabling address space randomization: Operation not permitted
+
+Breakpoint 1, main () at p2original.c:10
+10  {
+(gdb) n
+13    input_triangle(&x1,&y1,&x2,&y2,&x3,&y3);
+(gdb) s
+input_triangle (x1=0x7ffe222c161c, y1=0x7ffe222c1620, x2=0x7ffe222c1624, 
+    y2=0x7ffe222c1628, x3=0x7ffe222c162c, y3=0x7ffe222c1630) at p2original.c:22
+22    printf("Input x1: ");
+(gdb) n
+23      scanf("%f", x1);
+(gdb) n
+Input x1: 12
+24      printf("Input y1: ");
+(gdb) 
+25      scanf("%f", y1);
+(gdb) n
+Input y1: 23
+26    printf("Input x2: ");
+(gdb) n
+27      scanf("%f", x2);
+(gdb) 
+Input x2: 16
+28      printf("Input y2: ");
+(gdb) n
+29      scanf("%f", y2);
+(gdb) 26
+Undefined command: "26".  Try "help".
+(gdb) n
+Input y2: 26
+30    printf("Input x3: ");
+(gdb) n
+31      scanf("%f", x3);
+(gdb) n
+Input x3: 15
+32      printf("Input y3: ");
+(gdb) n
+33      scanf("%f", y3);
+(gdb) n
+Input y3: 28
+34  }
+(gdb) n
+main () at p2original.c:14
+14    istriangle = is_triangle(x1,y1,x2,y2,x3,y3);
+(gdb) s
+is_triangle (x1=12, y1=23, x2=16, y2=26, x3=15, y3=28) at p2original.c:39
+39    istriangle = x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2);
+(gdb) n
+40    return istriangle;
+(gdb) n
+41  }
+(gdb) n
+main () at p2original.c:15
+15    output(x1,y1,x2,y2,x3,y3,istriangle);
+(gdb) c
+Continuing.
+yes the points do form a triangle!!
+[Inferior 1 (process 1727) exited normally]
+(gdb) n
+The program is not being run.
+(gdb) q
